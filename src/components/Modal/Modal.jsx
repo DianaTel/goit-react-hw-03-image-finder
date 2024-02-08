@@ -1,28 +1,27 @@
 import { ModalStyle, Overlay } from './Modal.styled';
 import { createPortal } from 'react-dom';
-import { Component } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 const modalRoot = document.querySelector('#modal-root');
-
-export class Modal extends Component {
+ class Modal extends Component {
   static propTypes = {
     onClose: PropTypes.func.isRequired,
     selectedPhoto: PropTypes.shape({
       id: PropTypes.number.isRequired,
       largeImageURL: PropTypes.string.isRequired,
-      smallUrl: PropTypes.string.isRequired,
+      webformatURL: PropTypes.string.isRequired,
       tags: PropTypes.string.isRequired,
     }).isRequired,
   };
 
-  componentDidMount() {
+   componentDidMount() {
     window.addEventListener('keydown', this.onEscapeCloseModal);
-  }
+  };
 
   componentWillUnmount() {
     window.removeEventListener('keydown', this.onEscapeCloseModal);
-  }
+  };
 
   onEscapeCloseModal = event => {
     if (event.code === 'Escape') {
@@ -37,7 +36,10 @@ export class Modal extends Component {
   };
 
   render() {
-    const { largeImageURL, tags } = this.props;
+    const {
+      selectedPhoto: { largeImageURL, tags },
+    } = this.props;
+
     return createPortal(
       <Overlay onClick={this.onClickOverlay}>
         <ModalStyle>
@@ -47,5 +49,6 @@ export class Modal extends Component {
       modalRoot
     );
   }
-}
-export default Modal;
+ }
+
+ export default Modal;

@@ -4,11 +4,12 @@ import PropTypes from 'prop-types'
 
 export const ImageGallery = ({ photos, onClickImageItem }) => (
   <Gallery>
-    {photos.map(({ id, smallUrl, tags }) => (
+    {photos.map(({ id, webformatURL, tags }) => (
       <ImageGalleryItem
+        key={id}
         id={id}
         tags={tags}
-        smallUrl={smallUrl}
+        smallUrl={webformatURL}
         onClickImageItem={onClickImageItem}
       />
     ))}
@@ -17,23 +18,11 @@ export const ImageGallery = ({ photos, onClickImageItem }) => (
 
 ImageGallery.propTypes = {
   photos: PropTypes.arrayOf(
-    PropTypes.objectOf({
+    PropTypes.shape({
       id: PropTypes.number.isRequired,
-      smallUrl: PropTypes.string.isRequired,
+      webformatURL: PropTypes.string.isRequired,
       tags: PropTypes.string.isRequired,
     }).isRequired
   ).isRequired,
   onClickImageItem: PropTypes.func.isRequired,
 };
-
-
-
-
-
-
-
-
-
-
-
-
